@@ -10,6 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class JpaOneToManyApplication {
 
@@ -20,8 +22,30 @@ public class JpaOneToManyApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(AppDAO appDAO){
 		return runner -> {
-			createInstructorWithCourses(appDAO);
+			//createInstructorWithCourses(appDAO);
+			//updateInstructor(appDAO);
+			deleteInstructorById(appDAO);
 		};
+	}
+
+	private void deleteInstructorById(AppDAO appDAO) {
+		int theId=1;
+
+		//delete instructor
+		appDAO.deleteInstructor(theId);
+	}
+
+	private void updateInstructor(AppDAO appDAO) {
+		int theId=1;
+		System.out.println("finding instructor...");
+		Instructor theInstructor=appDAO.findById(theId);
+
+		System.out.println("Updating id...");
+		theInstructor.setLastName("Tester");
+
+		appDAO.update(theInstructor);
+
+		System.out.println("Done");
 	}
 
 	private void createInstructorWithCourses(AppDAO appDAO) {
